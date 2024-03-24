@@ -182,6 +182,29 @@ FOR DARK MODE
 --image-grayscale: 10%;
 --image-opacity: 90%;
 */
+/* Scroll Bar Styles */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the entire scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f5f5f5; /* Color of the scrollbar track */
+  border-radius: 6px; /* Rounded corners of the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d4d4d4; /* Color of the scrollbar thumb */
+  border-radius: 6px; /* Rounded corners of the thumb */
+  border: 2px solid #f5f5f5; /* Border around the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #bfbfbf; /* Color of the scrollbar thumb on hover */
+}
+
+::-webkit-scrollbar-thumb:active {
+  background-color: #a9a9a9; /* Color of the scrollbar thumb when active */
+}
 
 `;
 

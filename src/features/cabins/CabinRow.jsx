@@ -1,28 +1,34 @@
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
 import CreateCabinForm from "./CreateCabinForm";
-import { useState } from "react";
 import { useDeleteCabin } from "./useDeleteCabin";
+import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
+import { useCreateCabin } from "./useCreateCabin";
+import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
+import Table from "../../ui/Table";
+import Menus from "../../ui/Menus";
 
-const TableRow = styled.div`
-  display: grid;
-  grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
-  column-gap: 2.4rem;
-  align-items: center;
-  padding: 1.4rem 2.4rem;
+// const TableRow = styled.div`
+//   display: grid;
+//   grid-template-columns: 50px 1.8fr 2.2fr 1fr 1fr 1fr;
+//   column-gap: 2.4rem;
+//   align-items: center;
+//   padding: 1.4rem 2.4rem;
 
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--color-grey-100);
-  }
-`;
+//   &:not(:last-child) {
+//     border-bottom: 1px solid var(--color-grey-100);
+//   }
+// `;
 
 const Img = styled.img`
   display: block;
-  width: 6.4rem;
   aspect-ratio: 3 / 2;
   object-fit: cover;
   object-position: center;
   transform: scale(1.5) translateX(-7px);
+  width: 50px;
+  margin-left: 4px;
 `;
 
 const Cabin = styled.div`
@@ -43,8 +49,7 @@ const Discount = styled.div`
   color: var(--color-green-700);
 `;
 
-function CabinRow({ cabin }) {
-  const [showForm, setShowForm] = useState(false);
+function CabinRow({ cabin, name: isName }) {
   const {
     id: cabinId,
     name,
@@ -52,29 +57,73 @@ function CabinRow({ cabin }) {
     regularPrice,
     discount,
     image,
+    description,
   } = cabin;
+  const { isCreating, createCabin } = useCreateCabin();
   const { isDeleting, deleteCabin } = useDeleteCabin();
+  function handleDuplicate() {
+    createCabin({
+      name: `Copy of ${name}`,
+      maxCapacity,
+      regularPrice,
+      discount,
+      image,
+      description,
+    });
+  }
   return (
-    <>
-      <TableRow role="row">
+    <Table.Row>
+      <div className="image">
         <Img src={image} alt="Cabin img" />
-        <Cabin>{name}</Cabin>
-        <div>Fits up tp {maxCapacity} guests</div>
-        <Price>{formatCurrency(regularPrice)}</Price>
-        {discount ? (
-          <Discount>{formatCurrency(discount)}</Discount>
-        ) : (
-          <span>&mdash;</span>
-        )}
+      </div>
+      <Cabin>{name}</Cabin>
+      <div>Fits up tp {maxCapacity} guests</div>
+      <Price>{formatCurrency(regularPrice)}</Price>
+      {discount ? (
+        <Discount>{formatCurrency(discount)}</Discount>
+      ) : (
+        <span>&mdash;</span>
+      )}
+      {!isName && (
         <div>
-          <button onClick={() => setShowForm((show) => !show)}>Edit</button>
-          <button onClick={() => deleteCabin(cabinId)} disabled={isDeleting}>
-            Delete
+          <button onClick={handleDuplicate} disabled={isCreating}>
+            <HiSquare2Stack />
           </button>
+          <Modal>
+            <Modal.Open opens="edit">
+              <button>
+                <HiPencil />
+              </button>
+            </Modal.Open>
+            <Modal.Window name="edit">
+              <CreateCabinForm cabinToEdit={cabin} />
+            </Modal.Window>
+            <Modal.Open opens="delete">
+              <button>
+                <HiTrash />
+              </button>
+            </Modal.Open>
+            <Modal.Window name="delete">
+              <ConfirmDelete
+                resourceName={"cabins"}
+                disabled={isDeleting}
+                onConfirm={() => deleteCabin(cabinId)}
+              />
+            </Modal.Window>
+          </Modal>
+          <Menus.Menu>
+            <Menus.Toggle id={cabinId} />
+            <Menus.List id={cabinId}>
+              <Menus.Button icon={<HiSquare2Stack />} onClick={handleDuplicate}>
+                Duplicate
+              </Menus.Button>
+              <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
+              <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
+            </Menus.List>
+          </Menus.Menu>
         </div>
-      </TableRow>
-      {showForm && <CreateCabinForm cabinToEdit={cabin} />}
-    </>
+      )}
+    </Table.Row>
   );
 }
 
