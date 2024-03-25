@@ -53,7 +53,7 @@ const Button = styled.button`
   border-radius: var(--border-radius-sm);
   box-shadow: var(--shadow-sm);
   cursor: pointer;
-  margin: 20px;
+  margin: 5px;
   ${(props) => sizes[props.size]}
   ${(props) => variations[props.variation]}
 `;
