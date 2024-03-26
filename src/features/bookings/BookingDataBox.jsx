@@ -11,6 +11,7 @@ import DataItem from "../../ui/DataItem";
 import { Flag } from "../../ui/Flag";
 
 import { formatDistanceFromNow, formatCurrency } from "../../utils/helpers";
+import { guests } from "../../data/data-guests";
 
 const StyledBookingDataBox = styled.section`
   /* Box */
@@ -115,10 +116,17 @@ function BookingDataBox({ booking }) {
     hasBreakfast,
     observations,
     isPaid,
-    guests: { fullName: guestName, email, country, countryFlag, nationalID },
-    cabins: { name: cabinName },
-  } = booking;
-
+    guests,
+    cabins,
+  } = booking || {};
+  const {
+    fullName: guestName,
+    email,
+    country,
+    countryFlag,
+    nationalID,
+  } = guests || {};
+  const { name: cabinName } = cabins || {};
   return (
     <StyledBookingDataBox>
       <Header>
@@ -130,11 +138,15 @@ function BookingDataBox({ booking }) {
         </div>
 
         <p>
-          {format(new Date(startDate), "EEE, MMM dd yyyy")} (
-          {isToday(new Date(startDate))
-            ? "Today"
-            : formatDistanceFromNow(startDate)}
-          ) &mdash; {format(new Date(endDate), "EEE, MMM dd yyyy")}
+          {startDate
+            ? format(new Date(startDate), "EEE, MMM dd yyyy, p")
+            : "N/A"}{" "}
+          (
+          {startDate
+            ? format(new Date(startDate), "EEE, MMM dd yyyy, p")
+            : "N/A"}
+          ) &mdash;{" "}
+          {endDate ? format(new Date(endDate), "EEE, MMM dd yyyy, p") : "N/A"}
         </p>
       </Header>
 
@@ -178,7 +190,12 @@ function BookingDataBox({ booking }) {
       </Section>
 
       <Footer>
-        <p>Booked {format(new Date(created_at), "EEE, MMM dd yyyy, p")}</p>
+        <p>
+          Booked{" "}
+          {created_at
+            ? format(new Date(created_at), "EEE, MMM dd yyyy, p")
+            : "N/A"}
+        </p>
       </Footer>
     </StyledBookingDataBox>
   );

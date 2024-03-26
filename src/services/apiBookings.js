@@ -2,7 +2,8 @@ import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 
 // export async function getBookings({ filter, sortBy }) {
-export async function getBookings({ filter, sortBy }) {
+// export async function getBookings({ filter, page }) {
+export async function getBookings({ filter }) {
   let query = supabase
     .from("bookings")
     .select(
@@ -17,12 +18,19 @@ export async function getBookings({ filter, sortBy }) {
   //   query = query.order(sortBy.field, {
   //     ascending: sortBy.direction === "asc",
   //   });
+  // if (page) {
+  //   const from = (page - 1) * PAGE_SIZE;
+  //   const to = from + PAGE_SIZE - 1;
+  //   console.log(from, to);
+  //   query = query.range(from, to);
+  // }
   if (error) {
     console.error(error);
     throw new Error("Bookings could not be created");
   }
   return { data, count };
 }
+let { data: bookings, error } = await supabase.from("bookings").select("id");
 
 export async function getBooking(id) {
   const { data, error } = await supabase
@@ -30,7 +38,6 @@ export async function getBooking(id) {
     .select("*, cabins(*), guests(*)")
     .eq("id", id)
     .single();
-
   if (error) {
     console.error(error);
     throw new Error("Booking not found");

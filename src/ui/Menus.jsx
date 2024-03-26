@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
-import { HiEllipsisVertical } from "react-icons/hi2";
+import { HiEllipsisVertical, HiMiniBackspace } from "react-icons/hi2";
 import styled from "styled-components";
 import { useOutSide } from "../hooks/useOutside";
 
@@ -38,6 +38,7 @@ const StyledList = styled.ul`
 
   right: ${(props) => props.position?.x}px;
   top: ${(props) => props.position?.y}px;
+  padding-top: 20px;
 `;
 
 const StyledButton = styled.button`
@@ -65,6 +66,24 @@ const StyledButton = styled.button`
   }
 `;
 
+const Span = styled.span`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`;
+const CloseBtn = styled.button`
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  text-align: end;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  transition: all 0.5s;
+  &:hover {
+    color: var(--color-grey-900);
+  }
+`;
 const MenusContext = createContext();
 
 function Menus({ children }) {
@@ -82,11 +101,9 @@ function Menus({ children }) {
 }
 function Toggle({ id }) {
   const { openId, close, open, setPosition } = useContext(MenusContext);
-
   function handleClick(e) {
     const rect = e.target.closest("button").getBoundingClientRect();
     openId === "" || openId !== id ? open(id) : close();
-    console.log(rect);
     setPosition({
       x: window.innerWidth - rect.width - rect.x,
       y: rect.y + rect.height + 8,
@@ -104,6 +121,11 @@ function List({ id, children }) {
   if (openId !== id) return null;
   return createPortal(
     <StyledList position={position} ref={ref}>
+      <li>
+        <CloseBtn onClick={close}>
+          <HiMiniBackspace />
+        </CloseBtn>
+      </li>
       {children}
     </StyledList>,
     document.body
@@ -118,9 +140,9 @@ function Button({ children, icon, onClick }) {
   return (
     <li>
       <StyledButton onClick={handleClick}>
-        <span>
+        <Span>
           {icon} {children}
-        </span>
+        </Span>
       </StyledButton>
     </li>
   );

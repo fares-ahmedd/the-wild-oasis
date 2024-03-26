@@ -6,6 +6,7 @@ import { useBookings } from "./useBookings";
 import Spinner from "../../ui/Spinner";
 import { useSearchParams } from "react-router-dom";
 import Pagination from "../../ui/Pagination";
+import { PAGE_SIZE } from "../../utils/constants";
 
 function BookingTable() {
   const { bookings, isLoading, count } = useBookings();
@@ -22,6 +23,16 @@ function BookingTable() {
   const sortedCabins = bookings.sort(
     (a, b) => (a[field] - b[field]) * modifier
   );
+  // todo : pag
+  const currentPage = !searchParams.get("page")
+    ? 1
+    : Number(searchParams.get("page"));
+
+  const from = (currentPage - 1) * PAGE_SIZE;
+  const to = from + PAGE_SIZE - 1;
+  console.log("from", from);
+  console.log("to", to);
+  const pagination = sortedCabins.slice(from, to);
   return (
     <Menus>
       <Table columns="0.6fr 2fr 2.4fr 1.4fr 1fr 3.2rem">
@@ -35,7 +46,7 @@ function BookingTable() {
         </Table.Header>
 
         <Table.Body
-          data={sortedCabins}
+          data={pagination}
           render={(booking) => (
             <BookingRow key={booking.id} booking={booking} />
           )}
