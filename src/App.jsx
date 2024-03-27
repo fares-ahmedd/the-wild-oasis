@@ -19,7 +19,7 @@ import CheckinBooking from "./features/check-in-out/CheckinBooking";
 const queryClint = new QueryClient({
   defaultOptions: {
     queries: {
-      // staleTime: 60 * 1000,
+      // staleTime: 60 * 1000, // ? 1second
       staleTime: 0,
     },
   },
@@ -48,7 +48,7 @@ function App() {
         </Routes>
       </BrowserRouter>
       <Toaster
-        position="top-center"
+        position="top-right"
         gutter={12}
         containerStyle={{ margin: "8px" }}
         toastOptions={{
