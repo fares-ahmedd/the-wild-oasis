@@ -30,7 +30,6 @@ export async function getBookings({ filter }) {
   }
   return { data, count };
 }
-let { data: bookings, error } = await supabase.from("bookings").select("id");
 
 export async function getBooking(id) {
   const { data, error } = await supabase
@@ -66,7 +65,6 @@ export async function getBookingsAfterDate(date) {
 export async function getStaysAfterDate(date) {
   const { data, error } = await supabase
     .from("bookings")
-    // .select('*')
     .select("*, guests(fullName)")
     .gte("startDate", date)
     .lte("startDate", getToday());

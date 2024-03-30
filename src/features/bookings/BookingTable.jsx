@@ -13,7 +13,6 @@ function BookingTable() {
   const [searchParams] = useSearchParams();
 
   if (isLoading) return <Spinner />;
-
   if (!bookings.length) return <Empty resource="bookings" />;
   // todo : sort
 
