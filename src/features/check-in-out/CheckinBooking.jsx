@@ -6,7 +6,6 @@ import Heading from "../../ui/Heading";
 import ButtonGroup from "../../ui/ButtonGroup";
 import Button from "../../ui/Button";
 import ButtonText from "../../ui/ButtonText";
-import CheckBox from "../../ui/CheckBox";
 
 import { useMoveBack } from "../../hooks/useMoveBack";
 import { useBooking } from "../bookings/useBooking";
@@ -22,6 +21,31 @@ const Box = styled.div`
   border: 1px solid var(--color-grey-100);
   border-radius: var(--border-radius-md);
   padding: 2.4rem 4rem;
+`;
+
+const StyledCheckbox = styled.div`
+  display: flex;
+  gap: 1.6rem;
+
+  & input[type="checkbox"] {
+    height: 2.4rem;
+    width: 2.4rem;
+    outline-offset: 2px;
+    transform-origin: 0;
+    accent-color: var(--color-brand-600);
+  }
+
+  & input[type="checkbox"]:disabled {
+    accent-color: var(--color-brand-600);
+  }
+
+  & label {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
 `;
 
 function CheckinBooking() {
@@ -76,7 +100,7 @@ function CheckinBooking() {
       <BookingDataBox booking={booking} />
       {!hasBreakfast && (
         <Box>
-          <CheckBox
+          {/* <CheckBox
             checked={addBreakfast}
             onChange={() => {
               setAddBreakfast((add) => !add);
@@ -86,11 +110,27 @@ function CheckinBooking() {
           >
             want to add breakfast for{" "}
             <b>{formatCurrency(optionalBreakfastPrice)}</b>?
-          </CheckBox>
+          </CheckBox> */}
+          <StyledCheckbox>
+            <input
+              type="checkbox"
+              id={"breakfast"}
+              checked={addBreakfast}
+              onChange={() => {
+                setAddBreakfast((add) => !add);
+                setConfirmPaid(false);
+              }}
+            />
+            <label htmlFor={"breakfast"}>
+              {" "}
+              want to add breakfast for{" "}
+              <b>{formatCurrency(optionalBreakfastPrice)}</b>?
+            </label>
+          </StyledCheckbox>
         </Box>
       )}
       <Box>
-        <CheckBox
+        {/* <CheckBox
           checked={confirmPaid}
           onChange={() => setConfirmPaid((confirm) => !confirm)}
           id={"confirm"}
@@ -104,7 +144,26 @@ function CheckinBooking() {
               )} (${formatCurrency(totalPrice)} + ${formatCurrency(
                 optionalBreakfastPrice
               )})`}
-        </CheckBox>
+        </CheckBox> */}
+        <StyledCheckbox>
+          <input
+            type="checkbox"
+            id={"confirm"}
+            checked={confirmPaid}
+            onChange={() => setConfirmPaid((confirm) => !confirm)}
+            disabled={confirmPaid}
+          />
+          <label htmlFor={"confirm"}>
+            I confirm that {guests.fullName} has paid the total amount of{" "}
+            {!addBreakfast
+              ? formatCurrency(totalPrice)
+              : `${formatCurrency(
+                  totalPrice + optionalBreakfastPrice
+                )} (${formatCurrency(totalPrice)} + ${formatCurrency(
+                  optionalBreakfastPrice
+                )})`}
+          </label>
+        </StyledCheckbox>
       </Box>
 
       <ButtonGroup>
