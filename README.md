@@ -60,18 +60,4 @@ npm run dev
 yarn dev
 ```
 
-## 🗺️ Roadmap
-- [X] **Task 1:** Implement feature one.
-- [   ] **Task 2:** Develop feature two.
-- [   ] **Task 3:** Enhance X.
-
-## 🙏 Acknowledgements
-- [Awesome Tool](https://awesometool.link).
-- [Awesome Inspiration](https://awesomeinsp.link).
-
-## 📜 Changelog
-> All notable changes to this project will be documented in this section.
-#### [Version X.X.X] - YYYY-MM-DD
-- New features or enhancements added in this release.
-- Fixes to errors or problems.
 
