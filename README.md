@@ -2,7 +2,11 @@
 
 ## 📌 Overview
 "The Wild-Oasis project simplifies hotel booking using React.js and Supabase. Essential dependencies include supabase-js, react-query, date-fns, and more. Focus on seamless user experiences."
-
+---
+<img src="https://github.com/fares-ahmedd/the-wild-oasis/assets/110955622/24d1d949-83e1-4cc4-9d48-19a8ea0e8949" alt="Project image" width="100%">
+<img src="https://github.com/fares-ahmedd/the-wild-oasis/assets/110955622/003119b4-f56d-4b9f-8db8-916e067c7482" alt="Project image" width="100%">
+<img src="https://github.com/fares-ahmedd/the-wild-oasis/assets/110955622/47ae101b-0a97-4444-8cfe-7bd78b934e8f" alt="Project image" width="100%">
+---
 ## 🔍 Table of Contents
 
 * [💻 Stack](#stack)
