@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "../../ui/Button";
 import Form from "../../ui/Form";
 import Input from "../../ui/Input";
@@ -14,6 +14,17 @@ function LoginForm() {
     e.preventDefault();
     if (!email || !password) return;
 
+    setTimeout(() => {
+      login(
+        { email, password },
+        {
+          onSettled: () => {
+            setEmail("");
+            setPassword("");
+          },
+        }
+      );
+    }, 200);
     login(
       { email, password },
       {
@@ -24,22 +35,7 @@ function LoginForm() {
       }
     );
   }
-  useEffect(() => {
-    if (!email || !password) return;
 
-    const timer = setTimeout(() => {
-      login(
-        { email, password },
-        {
-          onSettled: () => {
-            setEmail("");
-            setPassword("");
-          },
-        }
-      );
-      return () => clearTimeout(timer);
-    }, 200);
-  }, [email, password, login]);
   return (
     <Form onSubmit={handleSubmit}>
       <FormRowVertical label="Email address">
