@@ -13,18 +13,6 @@ function LoginForm() {
   function handleSubmit(e) {
     e.preventDefault();
     if (!email || !password) return;
-
-    setTimeout(() => {
-      login(
-        { email, password },
-        {
-          onSettled: () => {
-            setEmail("");
-            setPassword("");
-          },
-        }
-      );
-    }, 200);
     login(
       { email, password },
       {
@@ -35,7 +23,6 @@ function LoginForm() {
       }
     );
   }
-
   return (
     <Form onSubmit={handleSubmit}>
       <FormRowVertical label="Email address">
