@@ -4,7 +4,6 @@ import { useCabins } from "./useCabins";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
 import { useSearchParams } from "react-router-dom";
-import Empty from "../../ui/Empty";
 
 function CabinTable({ name }) {
   const { isLoading, cabins } = useCabins();
@@ -40,7 +39,6 @@ function CabinTable({ name }) {
           <div></div>
         </Table.Header>
         <Table.Body
-          // data={filteredCabins}
           data={sortedCabins}
           render={(cabin) => (
             <CabinRow cabin={cabin} key={cabin.id} name={name} />
