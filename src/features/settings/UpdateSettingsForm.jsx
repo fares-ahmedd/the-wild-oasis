@@ -5,6 +5,7 @@ import Input from "../../ui/Input";
 import Spinner from "../../ui/Spinner";
 import { useSettings } from "./useSettings";
 import { useUpdateSetting } from "./useUpdateSetting";
+import toast from "react-hot-toast";
 const H1 = styled.h1`
   text-align: center;
   color: white;
@@ -19,7 +20,10 @@ function UpdateSettingsForm() {
   const { isUpdating, updateSetting } = useUpdateSetting();
   function handleUpdate(e, field) {
     const value = e.target.value;
-    if (!value) return;
+    if (!value) {
+      toast.error("Please Enter a value");
+      return;
+    }
     updateSetting({ [field]: value });
   }
   if (isLoading) return <Spinner />;

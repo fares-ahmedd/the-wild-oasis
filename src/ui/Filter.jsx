@@ -56,7 +56,6 @@ function Filter({ filterField, options }) {
           {option.label}
         </FilterButton>
       ))}
-      {/* <FilterButton onClick={() => handleClick("all")}>All</FilterButton> */}
     </StyledFilter>
   );
 }
