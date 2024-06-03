@@ -6,15 +6,8 @@ import { useSettings } from "./useSettings";
 import { useUpdateSetting } from "./useUpdateSetting";
 
 function UpdateSettingsForm() {
-  const {
-    isLoading,
-    settings: {
-      minBookingLength,
-      maxBookingLength,
-      maxGuestsPerBooking,
-      breakfastPrice,
-    } = {},
-  } = useSettings();
+  const { isLoading, settings, error } = useSettings();
+
   const { isUpdating, updateSetting } = useUpdateSetting();
   function handleUpdate(e, field) {
     const value = e.target.value;
@@ -26,7 +19,7 @@ function UpdateSettingsForm() {
     <Form>
       <FormRow label="Minimum nights/booking">
         <Input
-          defaultValue={minBookingLength}
+          defaultValue={settings.minBookingLength}
           type="number"
           id="min-nights"
           onBlur={(e) => handleUpdate(e, "minBookingLength")}
@@ -36,7 +29,7 @@ function UpdateSettingsForm() {
 
       <FormRow label="Maximum nights/booking">
         <Input
-          defaultValue={maxBookingLength}
+          defaultValue={settings.maxBookingLength}
           type="number"
           id="max-nights"
           onBlur={(e) => handleUpdate(e, "maxBookingLength")}
@@ -45,7 +38,7 @@ function UpdateSettingsForm() {
 
       <FormRow label="Maximum guests/booking">
         <Input
-          defaultValue={maxGuestsPerBooking}
+          defaultValue={settings.maxGuestsPerBooking}
           type="number"
           id="max-guests"
           onBlur={(e) => handleUpdate(e, "maxGuestsPerBooking")}
@@ -54,7 +47,7 @@ function UpdateSettingsForm() {
 
       <FormRow label="Breakfast price">
         <Input
-          defaultValue={breakfastPrice}
+          defaultValue={settings.breakfastPrice}
           type="number"
           id="breakfast-price"
           onBlur={(e) => handleUpdate(e, "breakfastPrice")}

@@ -14,7 +14,7 @@ const Li = styled.li`
   &.active button {
     background-color: var(--color-brand-600);
     & svg {
-      color: rebeccapurple;
+      color: var(--color-brand-50);
     }
   }
 `;
