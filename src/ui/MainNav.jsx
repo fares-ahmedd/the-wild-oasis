@@ -57,34 +57,39 @@ function MainNav() {
   return (
     <nav>
       <NavList>
-        <li>
-          <StyledNavLink to="/dashboard">
-            <HiHome /> <span> Home</span>
-          </StyledNavLink>
-        </li>
-        <li>
-          <StyledNavLink to="/bookings">
-            <HiOutlineCalendarDays /> <span>Bookings</span>
-          </StyledNavLink>
-        </li>
-        <li>
-          <StyledNavLink to="/cabins">
-            <HiOutlineHomeModern /> <span>Cabins</span>
-          </StyledNavLink>
-        </li>
-        <li>
-          <StyledNavLink to="/users">
-            <HiOutlineUsers /> <span>Users</span>
-          </StyledNavLink>
-        </li>
-        <li>
-          <StyledNavLink to="/settings">
-            <HiOutlineCog6Tooth /> <span>Settings</span>
-          </StyledNavLink>
-        </li>
+        {navArr.map((link) => (
+          <li key={link.id}>
+            <StyledNavLink to={link.link}>
+              {link.icon} <span>{link.title}</span>
+            </StyledNavLink>
+          </li>
+        ))}
       </NavList>
     </nav>
   );
 }
 
 export default MainNav;
+
+const navArr = [
+  { title: "Home", link: "/dashboard", icon: <HiHome />, id: "h123" },
+  {
+    title: "Bookings",
+    link: "/bookings",
+    icon: <HiOutlineCalendarDays />,
+    id: "6516",
+  },
+  {
+    title: "Cabins",
+    link: "/cabins",
+    icon: <HiOutlineHomeModern />,
+    id: "dwqeqw",
+  },
+  { title: "Users", link: "/users", icon: <HiOutlineUsers />, id: "grthrth" },
+  {
+    title: "Settings",
+    link: "/settings",
+    icon: <HiOutlineCog6Tooth />,
+    id: "6512e6qw",
+  },
+];

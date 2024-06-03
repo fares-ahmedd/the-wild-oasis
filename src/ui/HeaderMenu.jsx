@@ -14,7 +14,7 @@ const Li = styled.li`
   &.active button {
     background-color: var(--color-brand-600);
     & svg {
-      color: var(--color-brand-50);
+      color: rebeccapurple;
     }
   }
 `;
@@ -42,7 +42,7 @@ function HeaderMenu() {
     <StyledHeaderMenu>
       {menuItems.map((item, index) => (
         <Li
-          key={index}
+          key={Math.random()}
           onClick={() => setSelect(index)}
           className={`${select === index ? "active" : ""}`}
         >
