@@ -1,10 +1,18 @@
+import styled from "styled-components";
 import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import Spinner from "../../ui/Spinner";
 import { useSettings } from "./useSettings";
 import { useUpdateSetting } from "./useUpdateSetting";
-
+const H1 = styled.h1`
+  text-align: center;
+  color: white;
+  background-color: red;
+  padding: 15px;
+  margin-top: 30px;
+  border-radius: 20px;
+`;
 function UpdateSettingsForm() {
   const { isLoading, settings, error } = useSettings();
 
@@ -15,6 +23,7 @@ function UpdateSettingsForm() {
     updateSetting({ [field]: value });
   }
   if (isLoading) return <Spinner />;
+  if (error) return <H1>{error.message}</H1>;
   return (
     <Form>
       <FormRow label="Minimum nights/booking">

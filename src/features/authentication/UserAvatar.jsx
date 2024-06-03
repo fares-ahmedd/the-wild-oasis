@@ -28,10 +28,10 @@ function UserAvatar() {
   return (
     <StyledUserAvatar>
       <Avatar
-        src={avatar || "public/default-user.jpg"}
+        src={avatar || "/default-user.jpg"}
         alt={`Avatar of ${fullName}`}
       />
-      <span>{fullName}</span>
+      <span>{fullName || "Fares Ahmed"}</span>
     </StyledUserAvatar>
   );
 }
