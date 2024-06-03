@@ -16,8 +16,10 @@ export function useOutSide(handleClose, listenCapturing = true) {
       }
       document.addEventListener("click", handleClick, listenCapturing);
       document.addEventListener("keydown", handleInput);
-      return () =>
+      return () => {
         document.removeEventListener("click", handleClick, listenCapturing);
+        document.addEventListener("keydown", handleInput);
+      };
     },
     [handleClose, listenCapturing]
   );
