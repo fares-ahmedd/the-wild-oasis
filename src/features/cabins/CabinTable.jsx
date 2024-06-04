@@ -22,11 +22,9 @@ function CabinTable({ name }) {
   const sortBy = searchParams.get("sortBy") || "startDate-asc";
   const [field, direction] = sortBy.split("-");
   const modifier = direction === "asc" ? 1 : -1;
-  console.log(cabins);
-  const sortedCabins = filteredCabins.id
-    ? []
-    : filteredCabins.sort((a, b) => (a[field] - b[field]) * modifier);
-  console.log(modifier, sortedCabins);
+  const sortedCabins = filteredCabins.sort((a, b) => {
+    return (a[field] - b[field]) * modifier;
+  });
   if (!cabins.length) return <Empty resource="Cabins" />;
   return (
     <Menus>

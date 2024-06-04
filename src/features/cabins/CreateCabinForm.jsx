@@ -14,7 +14,6 @@ function CreateCabinForm({ cabinToEdit = {}, onClose }) {
   const { isCreating, createCabin } = useCreateCabin();
   const { isEditing, editCabin } = useEditCabin();
   const isWorking = isCreating || isEditing;
-
   const isEditSession = Boolean(editId);
   const {
     register,
@@ -27,7 +26,8 @@ function CreateCabinForm({ cabinToEdit = {}, onClose }) {
   });
   function onSubmit(data) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
-    if (isEditSession)
+
+    if (isEditSession) {
       editCabin(
         { newCabinData: { ...data, image }, id: editId },
         {
@@ -38,17 +38,17 @@ function CreateCabinForm({ cabinToEdit = {}, onClose }) {
           },
         }
       );
-    else
+    } else {
       createCabin(
         { ...data, image: image },
         {
-          onSuccess: (data) => {
-            console.log(data);
+          onSuccess: () => {
             reset();
             onClose?.();
           },
         }
       );
+    }
   }
 
   function onError(errors) {
@@ -123,7 +123,7 @@ function CreateCabinForm({ cabinToEdit = {}, onClose }) {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset" onClick={() => onClose?.()}>
+        <Button variation="secondary" type="reset" onClick={onClose}>
           Close
         </Button>
         <Button disabled={isWorking}>

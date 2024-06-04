@@ -110,7 +110,6 @@ function Toggle({ id }) {
       y: rect.y + rect.height + 8,
     });
   }
-  console.log("click");
 
   return (
     <StyledToggle onClick={handleClick}>
