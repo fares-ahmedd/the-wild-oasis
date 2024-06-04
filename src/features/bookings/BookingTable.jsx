@@ -11,7 +11,6 @@ import { PAGE_SIZE } from "../../utils/constants";
 function BookingTable() {
   const { bookings, isLoading, count } = useBookings();
   const [searchParams] = useSearchParams();
-
   if (isLoading) return <Spinner />;
   if (!bookings.length) return <Empty resource="bookings" />;
   // todo : sort
@@ -30,6 +29,7 @@ function BookingTable() {
   const from = (currentPage - 1) * PAGE_SIZE;
   const to = from + PAGE_SIZE - 1;
   const pagination = sortedCabins.slice(from, to);
+  console.log(pagination);
   return (
     <Menus>
       <Table columns="0.6fr 2fr 2.4fr 1.4fr 1fr 3.2rem">

@@ -56,10 +56,10 @@ function BookingRow({
     numGuests,
     totalPrice,
     status,
-    guests,
     cabins: { name: cabinName },
   },
 }) {
+  console.log(numGuests);
   const navigate = useNavigate();
   const { checkout, isCheckingOut } = useCheckout();
   const { isDeleting, deleteBooking } = useDeleteBooking();
@@ -68,15 +68,14 @@ function BookingRow({
     "checked-in": "green",
     "checked-out": "silver",
   };
-  console.log(guests);
   return (
     <Table.Row>
-      {/* <Cabin>{cabinName}</Cabin>
+      <Cabin>{cabinName}</Cabin>
 
       <Stacked>
-        {guestName && <span>{guestName}</span>}
-        <span>{email}</span>
-      </Stacked> */}
+        {numGuests && <span>{numGuests}</span>}
+        <span>{created_at}</span>
+      </Stacked>
 
       <Stacked>
         <span>
