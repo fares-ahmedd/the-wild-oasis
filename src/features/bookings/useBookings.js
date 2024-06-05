@@ -41,9 +41,11 @@ export function useBookings() {
       queryFn: () => getBookings({ filter }),
     });
   }
-  queryClient.prefetchQuery({
-    queryKey: ["bookings", filter, sortBy, currentPage - 1], //? this array retrigger as a dependency array to refetch the data (like use effect hook)
-    queryFn: () => getBookings({ filter }),
-  });
+  if (currentPage > 1) {
+    queryClient.prefetchQuery({
+      queryKey: ["bookings", filter, sortBy, currentPage - 1], //? this array retrigger as a dependency array to refetch the data (like use effect hook)
+      queryFn: () => getBookings({ filter }),
+    });
+  }
   return { isLoading, error, bookings, count };
 }
