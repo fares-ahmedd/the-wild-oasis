@@ -1,6 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getBookings } from "../../services/apiBookings";
 import { useSearchParams } from "react-router-dom";
+import { PAGE_SIZE } from "../../utils/constants";
 
 export function useBookings() {
   const queryClient = useQueryClient();
@@ -16,7 +17,7 @@ export function useBookings() {
   const sortByRaw = searchParams.get("sortBy") || "startDate-desc";
   const [field, direction] = sortByRaw.split("-");
   const sortBy = { field, direction };
-  // todo : pagination
+
   const currentPage = !searchParams.get("page")
     ? 1
     : Number(searchParams.get("page"));
@@ -27,16 +28,19 @@ export function useBookings() {
     error,
   } = useQuery({
     queryKey: ["bookings", filter, sortBy, currentPage], //? this array retrigger as a dependency array to refetch the data (like use effect hook)
-    // queryFn: () => getBookings({ filter, sortBy }),
     queryFn: () => getBookings({ filter }),
   });
 
-  // ! pre-fetching
+  // todo : pagination && pre-fetching
 
-  queryClient.prefetchQuery({
-    queryKey: ["bookings", filter, sortBy, currentPage + 1], //? this array retrigger as a dependency array to refetch the data (like use effect hook)
-    queryFn: () => getBookings({ filter }),
-  });
+  const pageCount = Math.ceil(count / PAGE_SIZE);
+
+  if (currentPage < pageCount) {
+    queryClient.prefetchQuery({
+      queryKey: ["bookings", filter, sortBy, currentPage + 1], //? this array retrigger as a dependency array to refetch the data (like use effect hook)
+      queryFn: () => getBookings({ filter }),
+    });
+  }
   queryClient.prefetchQuery({
     queryKey: ["bookings", filter, sortBy, currentPage - 1], //? this array retrigger as a dependency array to refetch the data (like use effect hook)
     queryFn: () => getBookings({ filter }),
